@@ -44,8 +44,10 @@ than loosening the test.
 The site is a Cloudflare Pages **direct-upload** project named `zollo-dot-net`, deployed by
 GitHub Actions (`.github/workflows/deploy.yml`), not by Cloudflare's Git integration:
 
-- **Push to `main`** (or run the workflow by hand): runs the tests, builds `dist/`, and runs
+- **Push to `main`**: runs the tests, builds `dist/`, and runs
   `wrangler pages deploy dist --project-name=zollo-dot-net --branch=main` (production).
+- **Manual run** (Actions → Deploy → Run workflow): deploys the branch it's started from, so a
+  run from `main` redeploys production and a run from any other branch makes a preview.
 - **Pull requests** from this repository get a preview deployment on their branch name. PRs from
   forks are skipped, since they don't get the secrets.
 

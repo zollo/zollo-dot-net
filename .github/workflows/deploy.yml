@@ -33,6 +33,9 @@ jobs:
           python -m pytest -q
           python build.py
 
+      # Production is the `main` branch of the Pages project. PRs deploy a preview on
+      # their head branch, and a manual run deploys the branch it was started from,
+      # so only main itself can reach production.
       - name: Deploy
         uses: cloudflare/wrangler-action@v3
         with:
@@ -41,4 +44,4 @@ jobs:
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
           command: >-
             pages deploy dist --project-name=zollo-dot-net
-            --branch=${{ github.event_name == 'pull_request' && github.head_ref || 'main' }}
+            --branch=${{ github.head_ref || github.ref_name }}
