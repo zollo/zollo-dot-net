@@ -41,19 +41,22 @@ than loosening the test.
 
 ## Deploying on Cloudflare Pages
 
-Connect this repository in the Cloudflare dashboard (Workers & Pages → Create → Pages → Connect to
-Git) with these settings:
+The site is a Cloudflare Pages **direct-upload** project named `zollo-dot-net`, deployed by
+GitHub Actions (`.github/workflows/deploy.yml`), not by Cloudflare's Git integration:
 
-| Setting | Value |
-|---|---|
-| Production branch | `main` |
-| Framework preset | None |
-| Build command | `pip install -r requirements.txt && python build.py` |
-| Build output directory | `dist` |
-| Environment variable | `PYTHON_VERSION` = `3.12` (also pinned in `.python-version`) |
+- **Push to `main`**: runs the tests, builds `dist/`, and runs
+  `wrangler pages deploy dist --project-name=zollo-dot-net --branch=main` (production).
+- **Manual run** (Actions → Deploy → Run workflow): deploys the branch it's started from, so a
+  run from `main` redeploys production and a run from any other branch makes a preview.
+- **Pull requests** from this repository get a preview deployment on their branch name. PRs from
+  forks are skipped, since they don't get the secrets.
 
-Every push to `main` deploys production; pull requests get preview URLs. Then add the custom
-domains `zollo.net` and `www.zollo.net` under the project's **Custom domains** tab.
+It needs two repository secrets: `CLOUDFLARE_API_TOKEN` (a token with *Cloudflare Pages: Edit*)
+and `CLOUDFLARE_ACCOUNT_ID`. Custom domains (`zollo.net`, `www.zollo.net`) are set on the Pages
+project in the Cloudflare dashboard.
+
+To build it the same way locally: `pip install -r requirements.txt && python build.py`, output in
+`dist/`, Python 3.12.
 
 The build writes a Cloudflare `_headers` file into `dist/` with security headers (HSTS, CSP,
 `nosniff`, `Referrer-Policy`, `X-Frame-Options`, `Permissions-Policy`) and long cache lifetimes for
