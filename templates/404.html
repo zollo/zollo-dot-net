@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}404 · {{ profile.name }}{% endblock %}
+{% block head %}<meta name="robots" content="noindex">{% endblock %}
+{% block body %}
+<main id="main" class="wrap notfound">
+  <div class="term">
+    <div class="term-bar" aria-hidden="true"><i></i><i></i><i></i><span>~/zollo.net</span></div>
+    <pre class="term-body"><span class="ps1">$</span> cd <span id="missing-path">this-page</span>
+<span class="err">bash: cd: No such file or directory</span>
+<span class="ps1">$</span> echo $?
+<span class="out">404</span>
+<span class="ps1">$</span> <span class="cursor"></span></pre>
+  </div>
+  <p><a class="btn btn-primary" href="/">cd ~</a></p>
+</main>
+{% endblock %}

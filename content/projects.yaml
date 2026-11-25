@@ -1,0 +1,60 @@
+# Open-source projects, in display order. `live:` (optional) adds a "Try it" link.
+- name: navi
+  repo: https://github.com/zollo/navi
+  icon: "🧭"
+  summary: One simple page for all of your important links. Self-hosted, open source, and yours.
+  details:
+    - A link-in-bio page at /<handle> with avatar, social icons and grouped link cards.
+    - Themes, gradient and image backgrounds, avatar cropping in the browser, and a live preview editor.
+    - Imports an existing Linktree page, and serves pages on your own custom domain after DNS verification.
+  stack: [Python, FastAPI, React, Postgres, Docker]
+
+- name: tabula
+  repo: https://github.com/zollo/tabula
+  icon: "🗄️"
+  summary: A self-hosted social media archiver for X, Bluesky and Reddit.
+  details:
+    - Tracks accounts on a schedule and keeps a searchable archive, including history from before you started.
+    - Shared archives with per-user scan intervals, resumable backfill, and JSON or PDF export.
+    - Celery workers for API collection plus a Playwright browser worker for platforms without an API.
+  stack: [Python, FastAPI, Celery, Playwright, React, Postgres]
+
+- name: trove
+  repo: https://github.com/zollo/trove
+  icon: "💼"
+  summary: A job-search portal where the headhunter is an AI agent, talking to it over MCP.
+  details:
+    - Candidates share their preferences and a base resume, then track every job through to an offer.
+    - AI headhunters (Claude, ChatGPT and others) find openings, score the fit and attach a tailored resume.
+    - Every MCP tool is a twin of a REST endpoint, so behavior and permissions are identical either way.
+  stack: [Python, FastAPI, MCP, React, Postgres]
+
+- name: azuregos
+  repo: https://github.com/zollo/azuregos
+  icon: "🎫"
+  summary: A service-desk front end for Azure DevOps. Think Jira Service Management, with ADO work items.
+  details:
+    - Admin-defined portals let people without ADO access submit and track work items.
+    - Submissions are cached locally first and pushed to ADO by a retrying background worker.
+    - Local accounts, OIDC and SAML 2.0 sign-in.
+  stack: [Python, FastAPI, Celery, React, Postgres, Redis]
+
+- name: diglett
+  repo: https://github.com/zollo/diglett
+  icon: "⛏️"
+  summary: A self-hostable web DNS lookup tool with a JSON API.
+  details:
+    - Many hostnames, record types and resolvers in one concurrent request, with automatic record discovery.
+    - Reverse lookups, +trace style delegation tracing, DNSSEC, and UDP, TCP, DoT and DoH transports.
+    - One static binary in a distroless, read-only container, signed with cosign.
+  stack: [Go, Docker, Helm]
+
+- name: certainly
+  repo: https://github.com/zollo/certainly
+  icon: "🔒"
+  summary: An open-source SSL/TLS analyzer, a self-hostable alternative to Qualys SSL Labs.
+  details:
+    - Inspects certificates, protocols and cipher suites in parallel, and scores each host 0 to 100 with a letter grade.
+    - Live OCSP validation, Certificate Transparency, CAA and a post-quantum readiness check.
+    - Web UI and job-based REST API, Redis cache, and optional expiring share links.
+  stack: [Python, FastAPI, Redis, Docker]

@@ -1,0 +1,283 @@
+{% extends "base.html" %}
+
+{% macro picture(img, alt, sizes, cls="", eager=False) -%}
+<picture>
+  <source type="image/webp" srcset="{{ img.webp }}" sizes="{{ sizes }}">
+  <img class="{{ cls }}" src="{{ img.src }}" srcset="{{ img.jpg }}" sizes="{{ sizes }}"
+       width="{{ img.width }}" height="{{ img.height }}" alt="{{ alt }}"
+       {% if eager %}fetchpriority="high"{% else %}loading="lazy"{% endif %} decoding="async">
+</picture>
+{%- endmacro %}
+
+{% block head %}
+<script type="application/ld+json">
+{{ {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": profile.name,
+  "jobTitle": profile.title,
+  "worksFor": {"@type": "Organization", "name": profile.company},
+  "url": profile.site_url,
+  "image": profile.site_url ~ "/img/headshot-640.jpg",
+  "sameAs": [profile.github] + ([profile.linkedin] if profile.get('linkedin') else [])
+} | tojson }}
+</script>
+{% endblock %}
+
+{% block body %}
+<header class="topbar" id="top">
+  <nav class="nav wrap" aria-label="Main">
+    <a class="brand" href="#top" aria-label="{{ profile.name }}, back to top">
+      <span class="prompt-user">{{ profile.handle }}</span><span class="dim">@</span><span class="prompt-host">zollo.net</span><span class="dim">:~$</span><span class="cursor" aria-hidden="true"></span>
+    </a>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav-links">
+      <span class="sr-only">Menu</span><span aria-hidden="true">☰</span>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="#about">about</a></li>
+      <li><a href="#experience">experience</a></li>
+      <li><a href="#projects">projects</a></li>
+      <li><a href="#homelab">homelab</a></li>
+      <li><a href="#skills">skills</a></li>
+      <li><a href="#contact">contact</a></li>
+      <li>
+        <button class="theme-toggle" type="button" aria-label="Switch light or dark theme" title="Switch theme">
+          <span class="icon-sun" aria-hidden="true">☀</span><span class="icon-moon" aria-hidden="true">☾</span>
+        </button>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+<main id="main">
+  <!-- ───────────── hero ───────────── -->
+  <section class="hero wrap" aria-labelledby="hero-name">
+    <div class="hero-text">
+      <p class="eyebrow mono"><span class="status-dot" aria-hidden="true"></span> {{ profile.title | lower }} @ {{ profile.company | lower }}</p>
+      <h1 id="hero-name">{{ profile.name }}</h1>
+      <p class="lede">{{ profile.tagline }}</p>
+
+      <div class="term" role="img" aria-label="Terminal: whoami. {{ profile.whoami | join('. ') }}">
+        <div class="term-bar" aria-hidden="true"><i></i><i></i><i></i><span>~/zollo.net</span></div>
+        <pre class="term-body" aria-hidden="true"><span class="ps1">$</span> <span class="typed" data-type="whoami">whoami</span>
+{% for line in profile.whoami %}<span class="out" data-line>{{ line }}</span>
+{% endfor %}<span class="ps1">$</span> <span class="cursor"></span></pre>
+      </div>
+
+      <div class="cta">
+        <a class="btn btn-primary" href="#projects">./view-projects</a>
+        <a class="btn" href="{{ profile.github }}" rel="me noopener">GitHub ↗</a>
+        <a class="btn" href="mailto:{{ profile.email }}">Email me</a>
+      </div>
+    </div>
+
+    <div class="hero-photo">
+      <div class="photo-ring">
+        {{ picture(images.headshot, "Portrait of " ~ profile.name, "(max-width: 860px) 220px, 340px", "headshot", eager=True) }}
+      </div>
+      <p class="photo-tag mono" aria-hidden="true">uptime: 20y · load: ☕☕☕</p>
+    </div>
+  </section>
+
+  <section class="stats wrap" aria-label="Highlights">
+    {% for s in profile.stats %}
+    <div class="stat">
+      <span class="stat-value">{{ s.value }}</span>
+      <span class="stat-label">{{ s.label }}</span>
+    </div>
+    {% endfor %}
+  </section>
+
+  <!-- ───────────── about ───────────── -->
+  <section id="about" class="section wrap" aria-labelledby="about-h">
+    <h2 class="section-title" id="about-h"><span class="cmd">cat</span> about.md</h2>
+    <div class="about-grid">
+      <figure class="polaroid">
+        {{ picture(images.full_body, profile.name ~ " standing in an office with arms crossed", "(max-width: 860px) 80vw, 360px") }}
+        <figcaption class="mono">IMG_0001.jpg: on-call, but smiling</figcaption>
+      </figure>
+      <div class="prose">
+        {% for p in profile.about %}<p>{{ p }}</p>{% endfor %}
+
+        <div class="mini-grid">
+          <div class="mini">
+            <h3>Talks &amp; stages</h3>
+            <ul>
+              {% for t in profile.talks %}<li><strong>{{ t.title }}</strong><span>{{ t.where }}</span></li>{% endfor %}
+            </ul>
+          </div>
+          <div class="mini">
+            <h3>Recognition</h3>
+            <ul>
+              {% for a in profile.awards %}<li><strong>{{ a.title }}</strong><span>{{ a.where }}</span></li>{% endfor %}
+            </ul>
+          </div>
+        </div>
+        <div class="mini">
+          <h3>Giving back</h3>
+          <ul class="bullets">
+            {% for c in profile.community %}<li>{{ c }}</li>{% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────── experience ───────────── -->
+  <section id="experience" class="section wrap" aria-labelledby="exp-h">
+    <h2 class="section-title" id="exp-h"><span class="cmd">git log</span> --graph career</h2>
+    <ol class="timeline">
+      {% for job in experience %}
+      <li class="company{% if job.company == 'Earlier' %} company-earlier{% endif %}">
+        <div class="company-head">
+          <span class="branch mono" aria-hidden="true">{{ 'HEAD → ' if loop.first }}{{ job.company | slug }}</span>
+          <h3>{{ job.company }}</h3>
+          {% if job.get('location') %}<span class="muted">{{ job.location }}</span>{% endif %}
+          {% if job.get('note') %}<p class="muted small">{{ job.note }}</p>{% endif %}
+        </div>
+        {% for role in job.roles %}
+        {% set collapsed = job.company == 'Earlier' or (not loop.first and loop.index > 2) %}
+        <article class="commit">
+          <span class="node" aria-hidden="true"></span>
+          <details {% if not collapsed %}open{% endif %}>
+            <summary>
+              <span class="hash mono" aria-hidden="true">{{ (job.company ~ role.title) | short_hash }}</span>
+              <span class="role">{{ role.title }}</span>
+              <span class="dates mono">{{ role.start }} – {{ role.end }}</span>
+            </summary>
+            <ul class="bullets">
+              {% for h in role.highlights %}<li>{{ h }}</li>{% endfor %}
+            </ul>
+            <ul class="chips" aria-label="Technologies">
+              {% for t in role.tags %}<li>{{ t }}</li>{% endfor %}
+            </ul>
+          </details>
+        </article>
+        {% endfor %}
+      </li>
+      {% endfor %}
+      <li class="company root-commit">
+        <span class="hash mono">0000000</span> <span class="muted">Initial commit, April 2005: first job in IT.</span>
+      </li>
+    </ol>
+  </section>
+
+  <!-- ───────────── projects ───────────── -->
+  <section id="projects" class="section wrap" aria-labelledby="proj-h">
+    <h2 class="section-title" id="proj-h"><span class="cmd">ls</span> ~/src/github.com/zollo</h2>
+    <p class="section-intro">Open-source, self-hostable apps I design, build and run. Each one ships as signed
+      container images and a Helm chart, and all of them run on my homelab cluster.</p>
+    <div class="cards">
+      {% for p in projects %}
+      <article class="card">
+        <header class="card-head">
+          <span class="card-icon" aria-hidden="true">{{ p.icon }}</span>
+          <h3><a href="{{ p.repo }}" rel="noopener"><span class="dim">zollo/</span>{{ p.name }}</a></h3>
+        </header>
+        <p class="card-summary">{{ p.summary }}</p>
+        <ul class="bullets small">
+          {% for d in p.details %}<li>{{ d }}</li>{% endfor %}
+        </ul>
+        <footer class="card-foot">
+          <ul class="chips" aria-label="Built with">
+            {% for s in p.stack %}<li>{{ s }}</li>{% endfor %}
+          </ul>
+          <div class="card-links">
+            <a href="{{ p.repo }}" rel="noopener">source ↗</a>
+            {% if p.get('live') %}<a href="{{ p.live }}" rel="noopener">try it ↗</a>{% endif %}
+          </div>
+        </footer>
+      </article>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- ───────────── homelab ───────────── -->
+  <section id="homelab" class="section wrap" aria-labelledby="lab-h">
+    <h2 class="section-title" id="lab-h"><span class="cmd">kubectl</span> describe homelab</h2>
+    <p class="section-intro">{{ homelab.intro }}</p>
+    <div class="lab-grid">
+      <div class="rack" aria-label="Homelab rack, top to bottom">
+        <div class="rack-rail" aria-hidden="true"></div>
+        {% for u in homelab.rack %}
+        <div class="rack-unit">
+          <span class="u mono" aria-hidden="true">U{{ loop.index }}</span>
+          <span class="leds" aria-hidden="true"><i></i><i></i></span>
+          <div class="unit-text">
+            <strong>{{ u.name }}</strong>
+            <span>{{ u.detail }}</span>
+          </div>
+          <ul class="chips tiny" aria-label="Technologies">
+            {% for t in u.tech %}<li>{{ t }}</li>{% endfor %}
+          </ul>
+        </div>
+        {% endfor %}
+      </div>
+      <div class="lab-highlights">
+        {% for h in homelab.highlights %}
+        <div class="hl">
+          <h3>{{ h.title }}</h3>
+          <p>{{ h.body }}</p>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    <ol class="pipeline mono" aria-label="Release pipeline">
+      {% for step in homelab.pipeline %}<li>{{ step }}</li>{% endfor %}
+    </ol>
+  </section>
+
+  <!-- ───────────── skills ───────────── -->
+  <section id="skills" class="section wrap" aria-labelledby="skills-h">
+    <h2 class="section-title" id="skills-h"><span class="cmd">ls</span> -1 skills/</h2>
+    <div class="skills">
+      {% for g in skills.groups %}
+      <div class="skill-group">
+        <h3 class="mono"><span class="dim">./</span>{{ g.group | slug }}/</h3>
+        <ul class="chips">
+          {% for i in g['items'] %}<li>{{ i }}</li>{% endfor %}
+        </ul>
+      </div>
+      {% endfor %}
+      <div class="skill-group">
+        <h3 class="mono"><span class="dim">./</span>certifications/</h3>
+        <ul class="bullets small">
+          {% for c in skills.certifications %}<li>{{ c }}</li>{% endfor %}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────── contact ───────────── -->
+  <section id="contact" class="section wrap" aria-labelledby="contact-h">
+    <h2 class="section-title" id="contact-h"><span class="cmd">./</span>contact.sh</h2>
+    <div class="contact-grid">
+      <div class="contact-text">
+        <p class="lede">Want to talk infrastructure, automation, or one of my projects? I'm happy to hear from you.</p>
+        <ul class="contact-links">
+          <li><span class="mono dim">mail</span> <a href="mailto:{{ profile.email }}">{{ profile.email }}</a></li>
+          <li><span class="mono dim">code</span> <a href="{{ profile.github }}" rel="me noopener">github.com/{{ profile.handle }}</a></li>
+          {% if profile.get('linkedin') %}<li><span class="mono dim">work</span> <a href="{{ profile.linkedin }}" rel="me noopener">LinkedIn</a></li>{% endif %}
+          <li><span class="mono dim">from</span> {{ profile.location }}</li>
+        </ul>
+      </div>
+      <div class="term term-live" data-email="{{ profile.email }}" data-github="{{ profile.github }}">
+        <div class="term-bar" aria-hidden="true"><i></i><i></i><i></i><span>try me: type <b>help</b></span></div>
+        <div class="term-body term-scroll" aria-live="polite">
+          <div class="term-out"><span class="out">Welcome to zollo.net. Type <b>help</b> to see what I can do.</span></div>
+          <form class="term-form" autocomplete="off">
+            <label class="ps1" for="term-input">$</label>
+            <input id="term-input" class="term-input" type="text" spellcheck="false" autocapitalize="off" aria-label="Terminal command">
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer wrap mono">
+  <span>© {{ year }} {{ profile.name }}</span>
+  <span class="dim">built with Python + Jinja on {{ built }} · no trackers, no cookies</span>
+  <a href="#top">cd ~ ↑</a>
+</footer>
+{% endblock %}

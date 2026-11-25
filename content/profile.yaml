@@ -1,0 +1,76 @@
+# Who I am. Everything on the page that isn't a list lives here.
+name: Joseph Zollo
+short_name: Joe
+handle: zollo
+title: Staff Engineer
+company: Omnissa
+location: Atlanta, GA
+site_url: https://www.zollo.net
+email: joe@zollo.net
+github: https://github.com/zollo
+# linkedin: https://www.linkedin.com/in/<your-handle>   # uncomment to show a LinkedIn link
+
+tagline: I build the automation that keeps large fleets of servers boring.
+description: >-
+  Joseph Zollo is a Staff Engineer at Omnissa who designs infrastructure and
+  automation platforms on AWS, vSphere and Kubernetes, and builds open-source
+  self-hosted tools in his spare time.
+
+# Lines printed by the terminal in the hero, after `$ whoami`.
+whoami:
+  - "joe zollo :: staff engineer @ omnissa"
+  - "20 years: network tech -> sysadmin -> SRE -> staff"
+  - "infra-as-code | ci/cd | kubernetes | windows + linux"
+
+about:
+  - >-
+    I'm a Staff Engineer on the UEM Cloud Services / SaaS team at Omnissa, the
+    company spun out of VMware's end-user computing division. I lead the
+    infrastructure and automation projects behind Workspace ONE UEM SaaS: moving
+    the platform from VMware Cloud on AWS to AWS native services, and moving our
+    source control and CI from Bitbucket and Bamboo to GitHub Actions.
+  - >-
+    I got here the long way. I started out wiring office networks and building
+    Exchange servers, spent seven years running IT for over a hundred small and
+    mid-sized businesses, and then joined VMware, where I went from lab
+    infrastructure to SRE to Staff Engineer. Along the way I picked up a strong
+    bias for automation, testing, and code that other people can reuse.
+  - >-
+    Outside of work I run a homelab rack that is closer to a small production
+    environment than a hobby, and I write open-source, self-hostable apps that
+    run on it.
+
+stats:
+  - value: "20+"
+    label: years in IT and infrastructure
+  - value: "6,000"
+    label: Windows and Linux VMs managed with Ansible
+  - value: "125 → 1"
+    label: repositories consolidated into one monorepo
+  - value: "EPIC²"
+    label: VMware's top award, 2021 (8 people a year)
+
+talks:
+  - title: "SaaSy Engineering: How VMware Manages 6000 Windows & Linux Virtual Machines with Ansible"
+    where: Red Hat AnsibleFest 2022
+    kind: talk
+  - title: Employee host, VMware Explore 2023
+    where: Filmed and produced event coverage with the content team
+    kind: host
+  - title: Infrastructure as Code for security engineering
+    where: MooseCon 2019 (VMware internal security conference)
+    kind: talk
+
+awards:
+  - title: EPIC² Award
+    where: VMware, 2021. The company's most prestigious award.
+  - title: PCS All Star Award
+    where: VMware, Q1 FY22. Engineering excellence.
+  - title: End User Computing MVP
+    where: VMware, Q1 FY20
+
+community:
+  - Mentored college interns in the summers of 2020 and 2021, and junior engineers throughout.
+  - Global Communications Co-Chair for PRIDE@VMware.
+  - Started an inner-source initiative at VMware to share reusable automation code across teams.
+  - Open-source contributions on GitHub, personally and on behalf of VMware.

@@ -1,0 +1,65 @@
+# The homelab section. Keep this high level: no IP addresses, host names,
+# internal domains, VLANs, firewall rules or remote-access/VPN details. tests/test_build.py
+# fails the build if any of those show up in the rendered site.
+intro: >-
+  A server rack in my house that I run like a small production environment:
+  everything is code, every change goes through Git, and if it breaks, an
+  alert tells me before anyone else notices. It's where I try things before I
+  recommend them at work, and it hosts the apps above.
+
+# Drawn as a rack, top to bottom.
+rack:
+  - name: Network edge
+    detail: Firewall, switching and enterprise Wi-Fi
+    tech: [Firewall, UniFi]
+  - name: Hypervisor
+    detail: Proxmox VE, with VMs cloned from templates by OpenTofu and Packer
+    tech: [Proxmox VE, OpenTofu, Packer]
+  - name: Kubernetes
+    detail: A k3s cluster, one control plane and four workers, managed in Rancher
+    tech: [k3s, Rancher, Helm]
+  - name: Windows & identity
+    detail: Active Directory on Windows Server 2025 Core, synced to Microsoft Entra ID
+    tech: [Active Directory, Entra ID, Windows Server 2025]
+  - name: Storage
+    detail: TrueNAS for shared storage and nightly backups
+    tech: [TrueNAS, NFS, ZFS]
+  - name: Observability
+    detail: Metrics, logs, dashboards and alerts for every layer above
+    tech: [Prometheus, Grafana, Loki, Alertmanager]
+
+highlights:
+  - title: GitOps with Argo CD
+    body: >-
+      The cluster's apps are declared in Git and deployed by Argo CD (app of apps).
+      Nothing gets applied by hand.
+  - title: Dev and prod, kept apart
+    body: >-
+      Each app gets its own dev and prod namespaces with default-deny network
+      policies and quotas, and Kyverno policies enforce what each environment may
+      expose.
+  - title: Release to deploy, hands off
+    body: >-
+      Pushing to main tests, versions and signs a release and publishes the image
+      and Helm chart. Dev picks up every release on its own; prod is promoted with
+      a pull request.
+  - title: Highly available ingress
+    body: >-
+      Traefik runs as two replicas behind a MetalLB address, and cert-manager keeps
+      Let's Encrypt certificates renewed.
+  - title: Watched from the outside
+    body: >-
+      Blackbox probes check every public endpoint and its certificate, and
+      Alertmanager pages my phone, with a dead man's switch in case alerting itself
+      goes quiet.
+  - title: Windows, the automated way
+    body: >-
+      Packer-built Windows Server 2025 templates, OpenTofu for the VMs, and scripted
+      domain-controller promotion, patching and certificate renewal.
+
+pipeline:
+  - git push
+  - test & release
+  - sign & publish
+  - argo cd sync
+  - dev → prod

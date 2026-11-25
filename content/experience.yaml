@@ -1,0 +1,142 @@
+# Newest first. Each company has one or more roles; `highlights` are the bullets.
+- company: Omnissa
+  location: Sandy Springs, GA
+  note: VMware's end-user computing division, spun off as an independent company.
+  roles:
+    - title: Staff Engineer, UEM Cloud Services / SaaS
+      start: Jul 2024
+      end: Present
+      tags: [AWS, Terraform, Ansible, GitHub Actions, RDS, ElastiCache]
+      highlights:
+        - >-
+          Led the two migrations the separation from VMware/Broadcom required:
+          VMware Cloud on AWS to AWS native, and Bitbucket/Bamboo to GitHub and GitHub Actions.
+        - >-
+          Leading the UEM infrastructure transition: extending our automation to run
+          on AWS native, vCenter and future platforms, including migrating customer
+          environments and data between them.
+        - >-
+          Moved VM-based workloads to managed services (SQL Server to Amazon RDS,
+          Memcached to ElastiCache) and set the pattern for AWS: Day 0/1 in Terraform,
+          Day 2+ per-customer operations in Ansible.
+        - >-
+          Consolidated more than 125 repositories into a single monorepo, and wrote a
+          custom GitHub Action for change detection so pull requests run only the
+          tests they need. That cut build times and compute cost for our expensive
+          Windows test suites.
+
+- company: VMware
+  location: Sandy Springs, GA
+  roles:
+    - title: Staff Engineer, UEM Cloud Services / SaaS
+      start: Aug 2022
+      end: Jul 2024
+      tags: [Packer, GitHub Actions, EKS, Helm, Terraform, Ansible, Jenkins, ECR]
+      highlights:
+        - >-
+          Project lead and architect for "Project Stormbreaker", an end-to-end framework
+          that builds, tests and ships Windows and Linux images as AMIs and VMDKs from one
+          codebase, distributed by GitHub Actions to every AWS region and on-prem vCenter.
+        - >-
+          Partnered with VMware Government Services on GovCloud-compliant images, and
+          brought their security improvements back into the commercial images.
+        - >-
+          Project lead and architect for "Automation 2.0", a containerized Ansible and
+          Jenkins platform on Kubernetes (EKS) that replaced a monolithic, VM-based
+          system: infrastructure in Terraform, applications in Helm, clusters isolated in
+          peered management VPCs, images in ECR with enhanced scanning. It runs automation
+          at a scale the old platform couldn't.
+        - >-
+          Spoke at Red Hat AnsibleFest 2022 and was an employee host for VMware Explore 2023.
+    - title: Senior Site Reliability Engineer, UEM Cloud Services / SaaS
+      start: Mar 2020
+      end: Aug 2022
+      tags: [Ansible, Molecule, pre-commit, Python, PowerShell, Bamboo]
+      highlights:
+        - >-
+          Brought an automation-first mindset to a team that included people who had
+          never written code, and replaced a monolithic codebase with modular Ansible
+          collections, roles and plugins.
+        - >-
+          Introduced pre-commit static analysis, Molecule integration tests and
+          ansible-test for Python and PowerShell plugins, built the team's first CI, and
+          made passing tests a requirement to merge.
+        - >-
+          Received the 2021 EPIC² award and the Q1 FY22 PCS All Star award. Mentored
+          interns in 2020 and 2021.
+    - title: Senior Site Reliability Engineer, R&D Infrastructure
+      start: Aug 2019
+      end: Mar 2020
+      tags: [Containers, Self-service infra, Windows Server Core]
+      highlights:
+        - >-
+          Migrated, scaled and containerized legacy internal tools, and helped build a
+          self-service leased-environment system covering VMs, applications and networking.
+        - >-
+          Built and ran an OS image pipeline for more than 15 vSphere templates across
+          three Linux distributions and several Windows Server versions.
+        - >-
+          Drove cross-team adoption of reusable Ansible code and Molecule testing, and
+          championed Windows Server Core for dev and production.
+    - title: Infrastructure Engineer, R&D Infrastructure
+      start: Aug 2018
+      end: Aug 2019
+      tags: [AD, DNS, DHCP, IPAM, Horizon, Workspace ONE]
+      highlights:
+        - >-
+          Ran development operations and lab infrastructure for EUC R&D, and consolidated
+          AD, DNS, DHCP and IPAM for reliability.
+        - >-
+          Deployed EUC reference architecture (Workspace ONE + Horizon), wrote RFCs for new
+          tools and processes, and automated detection and cleanup of lab resource abuse.
+        - >-
+          Spoke at MooseCon 2019. Received the EUC Q1 FY20 MVP award.
+
+- company: CNR Technologies
+  location: Woodstock, GA
+  roles:
+    - title: Director of IT Services
+      start: Sep 2015
+      end: Aug 2018
+      tags: [Security, SSO / ADFS, Group Policy, Chef, PowerShell]
+      highlights:
+        - >-
+          Ran day-to-day operations in a 70% technical / 30% management role: hiring,
+          performance reviews, and the engineering team's resources.
+        - >-
+          Built the information security program: compliance audits, penetration tests
+          and vulnerability assessments for customers, plus security-awareness training
+          for non-technical staff.
+        - >-
+          Designed the product stack (servers, firewalls, Wi-Fi, backup) and the hosted
+          Windows/Linux platform for customer applications, and rolled out SSO and
+          identity (ADFS, Azure AD Seamless SSO) for customers.
+        - >-
+          Automated vulnerability management, OS hardening and health checks, and led the
+          PSA/CRM rollout that raised revenue and cut administrative work.
+    - title: Senior Systems Engineer / Systems Engineer
+      start: Mar 2011
+      end: Sep 2015
+      tags: [vSphere, Hyper-V, SAN, Networking]
+      highlights:
+        - >-
+          Ran systems and networks for more than 100 businesses in healthcare,
+          construction, manufacturing, legal and financial services.
+        - >-
+          Designed highly available virtual infrastructure (vSphere HA, DRS, shared SAN
+          storage), and planned and proposed large IT projects for customers.
+
+- company: Earlier
+  roles:
+    - title: IT Support Technician, Copia Construction Services
+      start: Feb 2008
+      end: Dec 2010
+      tags: [VPN, Email, Support]
+      highlights:
+        - Deployed the company VPN and IMAP email, and moved the website to a new host with automated backups.
+    - title: Network Support Technician, Price Telecommunications
+      start: Apr 2005
+      end: Dec 2007
+      tags: [Windows Server 2003, Exchange, Active Directory]
+      highlights:
+        - Built the office network, Active Directory, DNS, DHCP, backups and an Exchange 2003 mail server.

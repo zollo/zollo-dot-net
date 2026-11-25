@@ -1,0 +1,19 @@
+# Skills, grouped. Shown as `ls`-style listings.
+groups:
+  - group: automation & devops
+    items: [Terraform / OpenTofu, Ansible, GitHub Actions, Jenkins, Bamboo, Packer, Helm, Argo CD, Python, Bash, PowerShell, Groovy]
+  - group: infrastructure
+    items: [AWS, vSphere, Hyper-V, Proxmox, Kubernetes / EKS / k3s, Docker, Active Directory, DNS / DHCP, Group Policy, Windows Server, RHEL / Debian]
+  - group: networking
+    items: [AWS ALB / NLB, NSX, pfSense, Sophos, Ubiquiti, Meraki, Ruckus, IPsec / SSL VPN, Avi, F5, HAProxy, PKI, NetFlow / packet capture]
+  - group: security & compliance
+    items: [Identity & access management, SSO / ADFS / Entra ID, Rapid7, Wazuh, HIPAA, PCI-DSS, ISO 27001]
+  - group: observability
+    items: [Prometheus, Grafana, Loki, Elasticsearch / Kibana / Beats]
+
+certifications:
+  - "MCSA: Windows Server 2008 / R2"
+  - "MCTS: Windows Server 2008 / R2 Active Directory, Configuring"
+  - "MCTS: Windows Server 2008 / R2 Network Infrastructure, Configuring"
+  - VMware Certified Associate, Data Center Virtualization
+  - CompTIA A+, Network+, Security+, Server+
